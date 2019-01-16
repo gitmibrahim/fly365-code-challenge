@@ -10,7 +10,6 @@ const hotelDetails = {
   watch: {
     hotel: function(newHotel) {
       if(newHotel.hasOwnProperty('reviews')) {
-        console.log(this.$store.state.sortOrder);
         this.$store.state.sortOrder === 'desc'
         ? this.reviews = newHotel.reviews.sort((a, b) => parseFloat(b.score) - parseFloat(a.score))
         : this.reviews = newHotel.reviews.sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
@@ -21,11 +20,11 @@ const hotelDetails = {
     sort(way, reviews) {
       if(way === 'desc' && this.$store.state.sortOrder === 'asec') {
         this.reviews = reviews.sort((a, b) => parseFloat(b.score) - parseFloat(a.score))
-        updateOrder('desc')
+        this.updateOrder('desc')
       }
       else if(way === 'asec' && this.$store.state.sortOrder === 'desc') {
         this.reviews = reviews.sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
-        updateOrder('asec')
+        this.updateOrder('asec')
       }
     },
     updateNights(e) {
@@ -34,8 +33,5 @@ const hotelDetails = {
     updateOrder(order) {
       this.$store.commit('updateOrder', order)
     },
-  },
-  created() {
-    console.log(store.getters.getNights);
-  },
+  }
 }
