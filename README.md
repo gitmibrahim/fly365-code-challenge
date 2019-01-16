@@ -4,7 +4,7 @@ try it [here](https://gitmibrahim.github.io/fly365-code-challenge/index.html) on
 
 **_Note_**: you may need to allow loading undafe content on your browser because of the requested insecure XMLHttpRequest endpoints.
 
-# Framewroks:
+### Framewroks:
 * Vue.js
 * Vuex
 
