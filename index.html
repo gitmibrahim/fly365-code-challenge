@@ -1,0 +1,42 @@
+<title>Code Challenge | fly365</title>
+<link rel="stylesheet" href="style.css">
+
+<div id="app">
+  <div id="allHotels" v-if="hotels.length > 0">
+    <div class="hotel" v-for="hotel in hotels" :key="hotel.id" @click="show(hotel)">
+      <a>{{ hotel.name }}</a>
+      <div class="card">
+        <img class="cardImage" :src="hotel.photo" :alt="hotel.name + '\'s photo'">
+        <p>${{ hotel.pricePerNight * nights }} for {{ nights }} night</p>
+      </div>
+    </div>
+  </div>
+
+  <hotel-details v-if="hotels.length > 0" :hotel="selectedHotel"></hotel-details>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.0.1/vuex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+<script src="./store.js"></script>
+<script src="./hotelDetails.js"></script>
+<script src="./index.js"></script>
+
+<script type="text/x-template" id="hotel-details">
+  <div id="hotelDetails">
+    <p>{{ hotel.name }}</p>
+    <div v-if="hotel.pictures">
+      <p>
+        <label for="nights">for</label>
+        <input type="number" id="nights" min="1" :value="nights" @input="updateNights">
+        Nights
+      </p>
+      <img :src="hotel.pictures[0].thumbnail" :alt="hotel.name + '\'s photo'">
+      <button class="active" @click="sort('asec', hotel.reviews)">asec</button>
+      <button @click="sort('desc', hotel.reviews)">desc</button>
+      <ul>
+        <li v-for="(review, index) in reviews" :key="index">{{ review.score }}</li>
+      </ul>
+    </div>
+  </div>
+</script>
