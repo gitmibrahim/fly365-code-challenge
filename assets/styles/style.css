@@ -1,0 +1,10 @@
+#app {
+  width: 80%;
+  margin: 10vmin auto;
+}
+
+#allHotels {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
