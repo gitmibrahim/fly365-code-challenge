@@ -1,29 +1,23 @@
 const hotelCard = {
   props: ['hotel'],
-  data() {
-    return {
-      
-    }
-  },
   template: '#hotel-card',
   methods: {
     show(hotel) {
       if (this.$store.state.selectedHotel.id !== hotel.id) {
         this.$store.state.selectedHotel = hotel //show the available data before getting the details
-        this.getDetails(hotel)
       }
     },
-    getDetails(hotel) {
-      this.$http
-        .get('http://my-json-server.typicode.com/fly365com/code-challenge/hotelDetails/' + hotel.id)
-        .then(response => {
-          this.$store.state.selectedHotel = response.data
-        })
-    }
   },
   computed: {
     nights() {
       return this.$store.state.nights
+    },
+    grade() {
+      if (this.hotel.totalScore < 5) return 'Bad'
+      else if (this.hotel.totalScore < 6.6) return 'Satisfactory'
+      else if (this.hotel.totalScore < 7.6) return 'Good'
+      else if (this.hotel.totalScore < 8.6) return 'Very good'
+      else return 'Excellent'
     }
   }
 }

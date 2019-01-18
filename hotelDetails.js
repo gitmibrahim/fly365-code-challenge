@@ -3,35 +3,48 @@ const hotelDetails = {
   data() {
     return {
       reviews: null,
-      ...store.state
+      selectedPic: '',
+      selectedHotel: {}
     }
   },
   template: '#hotel-details',
+  components: {
+    'hotel-photos': hotelPhotos,
+    'hotel-reviews': hotelReviews,
+  },
   watch: {
     hotel: function(newHotel) {
-      if(newHotel.hasOwnProperty('reviews')) {
-        this.$store.state.sortOrder === 'desc'
-        ? this.reviews = newHotel.reviews.sort((a, b) => parseFloat(b.score) - parseFloat(a.score))
-        : this.reviews = newHotel.reviews.sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
+      if(newHotel.id) {
+        this.$http
+          .get('http://my-json-server.typicode.com/fly365com/code-challenge/hotelDetails/' + newHotel.id)
+          .then(response => {
+            this.selectedHotel = response.data
+            this.selectedHotel.pictures.map(p => p.selected = false)
+            this.selectedPic = this.selectedHotel.pictures[0].photo
+            this.selectedHotel.pictures[0].selected = true
+          })
       }
     }
   },
   methods: {
-    sort(way, reviews) {
-      if(way === 'desc' && this.$store.state.sortOrder === 'asec') {
-        this.reviews = reviews.sort((a, b) => parseFloat(b.score) - parseFloat(a.score))
-        this.updateOrder('desc')
-      }
-      else if(way === 'asec' && this.$store.state.sortOrder === 'desc') {
-        this.reviews = reviews.sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
-        this.updateOrder('asec')
-      }
-    },
     updateNights(e) {
       this.$store.commit('updateNights', e.target.value)
     },
     updateOrder(order) {
       this.$store.commit('updateOrder', order)
+    },
+    togglePicture(index) {
+      this.selectedPic = this.selectedHotel.pictures[index].photo
+      this.selectedHotel.pictures.map(p => p.selected = false)
+      this.selectedHotel.pictures[index].selected = true
+    }
+  },
+  computed: {
+    nights() {
+      return this.$store.state.nights
+    },
+    sortOrder() {
+      return this.$store.state.sortOrder
     },
   }
 }

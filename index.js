@@ -8,10 +8,7 @@ const vm = new Vue({
   },
   components: {
     'hotel-card': hotelCard,
-    'hotel-details': hotelDetails
-  },
-  methods: {
-    
+    'hotel-details': hotelDetails,
   },
   created() {
     this.$http
