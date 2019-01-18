@@ -1,72 +1,51 @@
 const hotelReviews = {
-  props: ['hotelReviews'],
+  props: ['reviews'],
   data() {
     return {
-      reviews: [...this.hotelReviews],
-      isDesc: false,
-      isAsec: false
+      index: 0,
+      selectedSlice: 0
     }
   },
   template: '#hotel-reviews',
-  created() {
-    if (this.$store.state.sortOrder === 'desc') {
-      this.reviews = this.reviews.sort((a, b) => parseFloat(b.score) - parseFloat(a.score))
-      this.isDesc = true
-      this.isAsec = false
-    }
-    else if (this.$store.state.sortOrder === 'asec') {
-      this.reviews = this.reviews.sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
-      this.isDesc = false
-      this.isAsec = true
-    }
-    else {
-      this.reviews = [...this.hotelReviews]
-      this.isDesc = false
-      this.isAsec = false
+  watch: {
+    reviews() {
+      this.index = this.selectedSlice = 0
     }
   },
   methods: {
-    sort(way, reviews) {
-      console.log(way);
-      if(way === 'desc' && (this.$store.state.sortOrder === 'asec' || this.$store.state.sortOrder === '')) {
-        this.reviews = reviews.sort((a, b) => parseFloat(b.score) - parseFloat(a.score))
-        this.isDesc = true
-        this.isAsec = false
-        this.updateOrder('desc')
-      }
-      else if(way === 'asec' && (this.$store.state.sortOrder === 'desc' || this.$store.state.sortOrder === '')) {
-        this.reviews = reviews.sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
-        this.isDesc = false
-        this.isAsec = true
-        this.updateOrder('asec')
-      }
-    },
-    normalizeOrder() {
-      this.reviews = [...this.hotelReviews]
-      console.log(this.reviews, [...this.hotelReviews]);
-      this.updateOrder('')
-      this.isAsec = false
-      this.isDesc = false
-    },
-    updateNights(e) {
-      this.$store.commit('updateNights', e.target.value)
-    },
     updateOrder(order) {
       this.$store.commit('updateOrder', order)
     },
-    togglePicture(index) {
-      this.selectedPic = this.selectedHotel.pictures[index].photo
-      this.selectedHotel.pictures.map(p => p.selected = false)
-      this.selectedHotel.pictures[index].selected = true
-    }
+    updateIsAsec() {this.$store.commit('updateIsAsec')},
+    updateIsDesc() {this.$store.commit('updateIsDesc')},
+    navigateReviews(i) {
+      this.index = i * 3
+      this.selectedSlice = i
+    } 
+
   },
   computed: {
-    nights() {
-      return this.$store.state.nights
+    isAsec: {
+      get() {return this.$store.getters.isAsec},
     },
-    sortOrder: {
-      get() {return this.$store.state.sortOrder},
-      set(currentOrder) {if(currentOrder === '') this.reviews = [...this.hotelReviews]}
+    isDesc: {
+      get() {return this.$store.getters.isDesc},
     },
+    internalReviews() {
+      if (this.isAsec) {
+        this.updateOrder('asec')
+        return [...this.reviews].sort((a, b) => parseFloat(a.score) - parseFloat(b.score))
+      } 
+      if (this.isDesc) {
+        this.updateOrder('desc')
+        return [...this.reviews].sort((a, b) => parseFloat(b.score) - parseFloat(a.score)) 
+      }
+      if (!this.isAsec && !this.isDesc) {
+        this.updateOrder('')
+        return [...this.reviews]
+      }
+    },
+    slicedReviews() {return [...this.internalReviews].slice(this.index, this.index + 3)},
+    slices() {return Array(Math.ceil(this.internalReviews.length / 3)).fill().map((_, i) => i)},
   }
 }
