@@ -1,5 +1,9 @@
 <title>Code Challenge | fly365</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="./assets/styles/style.css">
+<link rel="stylesheet" href="./assets/styles/hotelCard.css">
+<link rel="stylesheet" href="./assets/styles/hotelDetails.css">
+<link rel="stylesheet" href="./assets/styles/hotelPhotos.css">
+<link rel="stylesheet" href="./assets/styles/hotelReviews.css">
 
 <div id="app">
   <div id="allHotels" v-if="hotels.length > 0">
@@ -13,35 +17,90 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.0.1/vuex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
 <script src="./store.js"></script>
+<script src="./hotelReviews.js"></script>
+<script src="./hotelPhotos.js"></script>
 <script src="./hotelCard.js"></script>
 <script src="./hotelDetails.js"></script>
 <script src="./index.js"></script>
 
-<script type="text/x-template" id="hotel-details">
-  <div id="hotelDetails">
-    <p>{{ hotel.name }}</p>
-    <div v-if="hotel.pictures">
-      <p>
-        <label for="nights">for</label>
-        <input type="number" id="nights" min="1" :value="nights" @input="updateNights">
-        Nights
-      </p>
-      <img :src="hotel.pictures[0].thumbnail" :alt="hotel.name + '\'s photo'">
-      <button class="active" @click="sort('asec', hotel.reviews)">asec</button>
-      <button @click="sort('desc', hotel.reviews)">desc</button>
-      <ul>
-        <li v-for="(review, index) in reviews" :key="index">{{ review.score }}</li>
-      </ul>
+<script type="text/x-template" id="hotel-card">
+  <div class="hotel" @click="show(hotel)">
+    <p class="hotelNAme">{{ hotel.name }}</p>
+    <div class="card">
+      <img class="cardImage" :src="hotel.photo" :alt="hotel.name + '\'s photo'">
+      <div class="info">
+        <p>${{ hotel.pricePerNight * nights }} for {{ nights }} night<span v-show="nights > 1">s</span></p>
+        <p>{{ hotel.totalScore }} {{ grade }}</p>
+        <p>{{ hotel.totalReviews }} review<span v-show="hotel.totalReviews > 1">s</span></p>
+      </div>
     </div>
   </div>
 </script>
 
-<script type="text/x-template" id="hotel-card">
-  <div class="hotel" @click="show(hotel)">
-    <a>{{ hotel.name }}</a>
-    <div class="card">
-      <img class="cardImage" :src="hotel.photo" :alt="hotel.name + '\'s photo'">
-      <p>${{ hotel.pricePerNight * nights }} for {{ nights }} night</p>
+<script type="text/x-template" id="hotel-details">
+  <div id="hotelDetails">
+    <p v-show="!hotel.name" id="selectPrompt">Select a hotel to show its details here.</p>
+    <h1 id="hotelName">{{ selectedHotel.name }}</h1>
+    <div v-show="selectedHotel.pictures">
+      <h3 id="nightsContainer">
+        <label for="nightsInput">for</label>
+        <input type="number" id="nightsInput" min="1" :value="nights" @input="updateNights">
+        Night<span v-show="nights > 1">s</span>
+      </h3>
+      <hotel-photos :pictures="selectedHotel.pictures || []" :hotelName="selectedHotel.name"></hotel-photos>
+      <hotel-reviews :reviews="selectedHotel.reviews || []"></hotel-reviews>
+    </div>
+    <p v-show="selectedHotel.name && !selectedHotel.pictures">loading hotel data...</p>
+  </div>
+</script>
+
+<script type="text/x-template" id="hotel-photos">
+  <div id="gallery">
+    <img id="mainPic" :src="pictures.length > 0 ? pictures[activeIndex].photo : ''" :alt="hotelName + '\'s photo'">
+    <div id="picsBar">
+      <img v-for="(picture, index) in pictures" :key="index" :class="{'active': activeIndex === index}"
+      @click="togglePicture(index)" :src="picture.thumbnail" :alt="hotelName + '\'s photo'">
+    </div>
+  </div>
+</script>
+
+<script type="text/x-template" id="hotel-reviews">
+  <div id="reviewsSection">
+    <div id="order">
+      <h2 id="reviewsTitle">Reviews&ensp;</h2>
+      <div id="orderArrows">
+        <svg class="arrows" :class="{'active': isAsec}" @click="updateIsAsec()"
+          version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="292.362px" height="292.362px" viewBox="0 0 292.362 292.362" style="enable-background:new 0 0 292.362 292.362;"
+          xml:space="preserve">
+          <title>order reviews asecendingly</title>
+          <g>
+            <path d="M286.935,197.286L159.028,69.379c-3.613-3.617-7.895-5.424-12.847-5.424s-9.233,1.807-12.85,5.424L5.424,197.286
+              C1.807,200.9,0,205.184,0,210.132s1.807,9.233,5.424,12.847c3.621,3.617,7.902,5.428,12.85,5.428h255.813
+              c4.949,0,9.233-1.811,12.848-5.428c3.613-3.613,5.427-7.898,5.427-12.847S290.548,200.9,286.935,197.286z"/>
+          </g>
+        </svg>
+        <svg class="arrows" :class="{'active': isDesc}" @click="updateIsDesc()"
+          version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          width="292.362px" height="292.362px" viewBox="0 0 292.362 292.362" style="enable-background:new 0 0 292.362 292.362;"
+          xml:space="preserve">
+          <title>order reviews desendingly</title>
+          <g>
+            <path d="M286.935,69.377c-3.614-3.617-7.898-5.424-12.848-5.424H18.274c-4.952,0-9.233,1.807-12.85,5.424
+              C1.807,72.998,0,77.279,0,82.228c0,4.948,1.807,9.229,5.424,12.847l127.907,127.907c3.621,3.617,7.902,5.428,12.85,5.428
+              s9.233-1.811,12.847-5.428L286.935,95.074c3.613-3.617,5.427-7.898,5.427-12.847C292.362,77.279,290.548,72.998,286.935,69.377z"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div id="reviews">
+      <p v-for="(review, index) in slicedReviews" :key="index" class="review">
+        <span class="reviewScore">{{ review.score }}</span>{{' '}}
+        <span class="reviewText">{{ review.review }}</span>
+      </p>
+    </div>
+    <div id="reviewsNav">
+      <p v-for="n in slices" :key="n + 'n'" class="navNum" :class="{'active': selectedSlice == n}" @click="navigateReviews(n)">{{ n+1 }}</p>
     </div>
   </div>
 </script>
