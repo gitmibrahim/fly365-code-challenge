@@ -2,7 +2,7 @@
 
 try it [here](https://gitmibrahim.github.io/fly365-code-challenge/index.html) on Github Pages.
 
-**_Note_**: you may need to allow loading undafe content on your browser because of the requested insecure XMLHttpRequest endpoints.
+**_Note_**: you may need to allow your browser to 'load unsafe script' on your browser because of the requested insecure XMLHttpRequest endpoints.
 
 ### Framewroks:
 * Vue.js
