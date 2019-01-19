@@ -36,3 +36,7 @@
   border: 2px solid #406DAC;
   border-radius: 7px;
 }
+
+.buffer {
+  opacity: 0.3;
+}
