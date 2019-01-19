@@ -3,6 +3,7 @@ const hotelPhotos = {
   data() {
     return {
       activeIndex: 0,
+      loading: true
     }
   },
   template: '#hotel-photos',
