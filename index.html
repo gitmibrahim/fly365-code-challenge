@@ -23,6 +23,7 @@
 <script src="./hotelDetails.js"></script>
 <script src="./index.js"></script>
 
+<!-- <hotel-card> component accepts (hotel) property -->
 <script type="text/x-template" id="hotel-card">
   <div class="hotel" @click="show(hotel)">
     <p class="hotelNAme">{{ hotel.name }}</p>
@@ -37,6 +38,7 @@
   </div>
 </script>
 
+<!-- <hotel-details> component accepts (hotel) property -->
 <script type="text/x-template" id="hotel-details">
   <div id="hotelDetails">
     <p v-show="!hotel.name" id="selectPrompt">Select a hotel to show its details here.</p>
@@ -54,6 +56,7 @@
   </div>
 </script>
 
+<!-- <hotel-photos> component accepts (hotel.pictures, hotel.name) as (pictures, hotelName) properties respectively -->
 <script type="text/x-template" id="hotel-photos">
   <div id="gallery">
     <img id="mainPic" :src="pictures.length > 0 ? pictures[activeIndex].photo : ''" :alt="hotelName + '\'s photo'">
@@ -64,6 +67,7 @@
   </div>
 </script>
 
+<!-- <hotel-reviews> component accepts (reviews) as (hotel.reviews) property -->
 <script type="text/x-template" id="hotel-reviews">
   <div id="reviewsSection">
     <div id="order">
