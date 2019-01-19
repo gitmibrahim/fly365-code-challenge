@@ -59,10 +59,11 @@
 <!-- <hotel-photos> component accepts (hotel.pictures, hotel.name) as (pictures, hotelName) properties respectively -->
 <script type="text/x-template" id="hotel-photos">
   <div id="gallery">
-    <img id="mainPic" :src="pictures.length > 0 ? pictures[activeIndex].photo : ''" :alt="hotelName + '\'s photo'">
+    <img id="mainPic" :class="{'buffer': loading}" @load="loading = false"
+    :src="pictures.length > 0 ? pictures[activeIndex].photo : ''" :alt="hotelName + '\'s photo'">
     <div id="picsBar">
       <img v-for="(picture, index) in pictures" :key="index" :class="{'active': activeIndex === index}"
-      @click="togglePicture(index)" :src="picture.thumbnail" :alt="hotelName + '\'s photo'">
+      @click="activeIndex = index; loading = true" :src="picture.thumbnail" :alt="hotelName + '\'s photo'">
     </div>
   </div>
 </script>
