@@ -6,18 +6,4 @@ const hotelPhotos = {
     }
   },
   template: '#hotel-photos',
-  methods: {
-    togglePicture(index) {
-      this.activeIndex = index
-    }
-  },
-  computed: {
-    // selectedPic() {
-    //   if(this.pictures.length > 0) {
-    //     this.pictures.map(p => p.selected = false)
-    //     this.pictures[this.activeIndex].selected = true
-    //     return this.pictures[this.activeIndex].photo
-    //   }
-    // }
-  }
 }
