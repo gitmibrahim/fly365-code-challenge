@@ -15,7 +15,6 @@ describe('App', () => {
   })
 
   it('has a created hook', () => {
-    console.log(App);
     expect(typeof App.$options.created[0]).toBe('function')
   })
 
