@@ -1,0 +1,36 @@
+.hotel {
+  min-width: 250px;
+  font-family: verdana;
+  margin: 25px 0;
+  padding: 10px;
+  cursor: pointer;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.hotel:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.hotel.active {
+  background-color: #eee;
+  cursor: default;
+}
+.hotel.active:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 5px rgba(0,0,0,0.24);
+}
+.hotelName {
+  margin: 0 0 20px;
+  text-decoration: underline;
+  color: #406DAC;
+  font-family: Verdana, Geneva, sans-serif;
+}
+.card {
+  display: flex;
+}
+.cardImage {
+  max-height: 120px;
+}
+.info {
+  margin: 0 19px;
+}

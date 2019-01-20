@@ -1,0 +1,85 @@
+@charset "UTF-8";
+#reviewsNav .active {
+  background-color: #406DAC;
+  color: #fff;
+  border-color: #406DAC;
+}
+#order {
+  display: flex;
+}
+#reviewsTitle {
+  margin: .24em 0;
+}
+#reviewsLength {
+  font-size: .8em;
+  font-weight: normal;
+}
+#orderArrows {
+  display: flex;
+  flex-flow: column;
+  height: 48px;
+}
+.arrows {
+  width: 19px;
+  height: 24px;
+}
+.arrows.active {
+  fill: #5b9fff;
+}
+#reviews {
+  height: 350px;
+  overflow-y: auto;
+}
+.review {
+  display: flex;
+}
+.reviewScore {
+  border-radius: 50%;
+  min-width: 26px;
+  height: 23px;
+  padding: 12px 8px 8px;
+  border: 2px solid #000;
+  text-align: center;
+  margin-right: 11px;
+}
+.reviewText {
+  text-align: justify;
+  padding: 6px 10px 10px;
+}
+#reviewsNav {
+  display: flex;
+  width: 40%;
+  margin: auto;
+  justify-content: center;
+}
+.navNum {
+  border: 2px solid #000;
+  margin: 1em 10px;
+  padding: 5px 7px;
+  cursor: pointer;
+}
+.shift {
+  border: 0;
+}
+.shift::before {
+  content: '➤'
+}
+.disabled {
+  cursor: default;
+  color: #aaa;
+}
+#prev {
+  transform: rotate(180deg);
+}
+#reviews::-webkit-scrollbar {
+  width: 15px;
+}
+#reviews::-webkit-scrollbar-thumb {
+  border-radius: 7px;
+  background: #406DAC;
+}
+#reviews::-webkit-scrollbar-track {
+  background: #fff;
+  border: 2px solid #406DAC;
+  border-radius: 7px;
+}
