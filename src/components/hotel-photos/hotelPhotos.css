@@ -2,6 +2,11 @@
   max-width: 50%;
   outline: 3px solid #000;
 }
+@media (max-width: 917px) {
+  #mainPic {
+    max-width: 70%;
+  }
+}
 #picsBarWrapper {
   max-width: 70%;
   margin: 20px auto;

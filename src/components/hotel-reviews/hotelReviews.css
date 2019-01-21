@@ -26,9 +26,14 @@
 .arrows.active {
   fill: #5b9fff;
 }
+#reviewsSection {
+  margin: 50px 0 0;
+}
 #reviews {
   height: 350px;
   overflow-y: auto;
+  box-shadow: 0px 0px 6px 1px #aaa inset;
+  padding: 10px;
 }
 .review {
   display: flex;
@@ -49,8 +54,9 @@
 #reviewsNav {
   display: flex;
   width: 40%;
-  margin: auto;
+  margin: 20px auto;
   justify-content: center;
+  user-select: none;
 }
 .navNum {
   border: 2px solid #000;
