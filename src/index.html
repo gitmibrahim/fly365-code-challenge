@@ -75,9 +75,11 @@
   <div id="gallery">
     <img id="mainPic" :class="{'buffer': loading}" @load="loading = false"
     :src="pictures.length > 0 ? pictures[activeIndex].photo : ''" :alt="hotelName + '\'s photo'">
-    <div id="picsBar">
-      <img v-for="(picture, index) in pictures" :key="index" :class="{'active': activeIndex === index}"
-      @click="activeIndex = index; loading = true" :src="picture.thumbnail" :alt="hotelName + '\'s photo'">
+    <div id="picsBarWrapper">
+      <div id="picsBar">
+        <img v-for="(picture, index) in pictures" :key="index" :class="{'active': activeIndex === index}"
+        @click="activeIndex = index; loading = true" :src="picture.thumbnail" :alt="hotelName + '\'s photo'">
+      </div>
     </div>
   </div>
 </script>

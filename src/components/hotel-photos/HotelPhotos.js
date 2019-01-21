@@ -7,4 +7,9 @@ const HotelPhotos = {
     }
   },
   template: '#hotel-photos',
+  watch: {
+    pictures() {
+      this.activeIndex = 0
+    }
+  }
 }
