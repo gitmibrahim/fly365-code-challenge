@@ -29,13 +29,23 @@
   margin: 50px 0 0;
 }
 #reviews {
-  height: 350px;
+  height: 360px;
   overflow-y: auto;
   box-shadow: 0px 0px 6px 1px #aaa inset;
-  padding: 10px;
+  padding: 30px;
 }
 .review {
   display: flex;
+}
+.reviewWrapper:nth-child(2) {
+  margin-block-start: 1.7em;
+  margin-block-end: 1.7em;
+}
+.score {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-right: 11px;
 }
 .reviewScore {
   border-radius: 50%;
@@ -44,11 +54,21 @@
   padding: 12px 8px 8px;
   border: 2px solid #000;
   text-align: center;
-  margin-right: 11px;
+  margin-bottom: 5px;
+}
+.star {
+  width: 24px;
+  height: 24px;
 }
 .reviewText {
-  text-align: justify;
-  padding: 6px 10px 10px;
+  text-align: left;
+  padding: 0 10px;
+  align-self: center;
+}
+@media (max-width: 998px) {
+  .reviewText {
+    padding: 0;
+  }
 }
 #reviewsNav {
   display: flex;

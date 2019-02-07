@@ -118,15 +118,21 @@
       </div>
     </div>
     <div id="reviews">
-      <p v-for="(review, index) in slicedReviews" :key="index" class="review">
-        <span class="reviewScore">{{ review.score }}</span>{{' '}}
-        <span class="reviewText">{{ review.review }}</span>
-      </p>
+      <section v-for="(review, index) in slicedReviews" :key="index" class="reviewWrapper">
+        <p class="review">
+          <span class="score">
+            <span class="reviewScore">{{ review.score }}</span>{{' '}}
+            <svg class="star" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 224 224"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,224v-224h224v224z" fill="none"></path><g fill="#ffcc00"><path d="M45.696,217.728c-0.896,0 -1.792,-0.448 -2.688,-0.896c-1.344,-0.896 -2.24,-3.136 -1.792,-4.928l19.712,-73.472l-59.136,-47.936c-1.792,-0.896 -2.24,-3.136 -1.792,-4.928c0.448,-1.792 2.24,-3.136 4.032,-3.136l76.16,-4.032l27.328,-71.232c0.896,-1.344 2.688,-2.688 4.48,-2.688c1.792,0 3.584,1.344 4.032,2.688l27.328,71.232l76.16,4.032c1.792,0 3.584,1.344 4.032,3.136c0.448,1.792 0,3.584 -1.344,4.928l-59.136,47.936l19.712,73.472c0.448,1.792 0,3.584 -1.792,4.928c-1.344,0.896 -3.584,1.344 -4.928,0l-64.064,-41.216l-64.064,41.216c-0.896,0.896 -1.344,0.896 -2.24,0.896z"></path></g></g></svg>
+          </span>
+          <span class="reviewText">{{ review.review }}</span>
+        </p>
+        <hr v-if="index !== slicedReviews.length - 1">
+      </section>
     </div>
-    <div id="reviewsNav">
+    <nav id="reviewsNav">
       <p class="navNum shift" :class="{'disabled': selectedSlice == 0}" id="prev" title="prev" @click="selectedSlice > 0 ? navigateReviews(selectedSlice - 1) : false"></p>
       <p v-for="n in slices" :key="n + 'n'" class="navNum" :class="{'active': selectedSlice == n}" @click="navigateReviews(n)">{{ n + 1 }}</p>
       <p class="navNum shift" :class="{'disabled': selectedSlice == arrOfNums.length - 1}" title="next" @click="selectedSlice < arrOfNums.length - 1 ? navigateReviews(selectedSlice + 1) : false"></p>
-    </div>
+    </nav>
   </div>
 </script>
